@@ -1,8 +1,13 @@
 This plugin will run `kustomize build --enable-helm`.
 
 ## Installation
-Examples are provided with plain Kubernetes manifests and kustomize.
+Examples are provided with plain Kubernetes manifests, Helm, and kustomize.
 
+* [Helm](helm)
+* [Kubernetes Manifests](plain-manifests)
+* [Kustomize with Argo CD Autopilot](kustomize-with-autopilot)
+
+#### Basic Instructions
 ### Create a configmap with the CMP configuration
 
 `kubectl apply -f https://raw.githubusercontent.com/todaywasawesome/argocd-cmp-plugin-examples/main/examples/kustomize-with-helm/plain-manifests/kustomize-build-with-helm.configmap.yaml`
