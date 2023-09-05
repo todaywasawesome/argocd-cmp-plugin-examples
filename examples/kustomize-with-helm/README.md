@@ -1,9 +1,10 @@
 This plugin will run `kustomize build --enable-helm`.
 
 ## Installation
-Examples are provided with plain Kubernetes manifests, Helm, and kustomize.
+Examples are provided with plain Kubernetes manifests, Codefresh's Helm chart, the community Helm chart, and kustomize.
 
-* [Helm](helm)
+* [Codefresh Helm Chart](codefresh)
+* [Commumity Helm Chart](helm)
 * [Kubernetes Manifests](plain-manifests)
 * [Kustomize with Argo CD Autopilot](kustomize-with-autopilot)
 
