@@ -1,3 +1,4 @@
+# Create Config Management Plugins Modifying Argo CD Manifests
 This plugin will run `kustomize build --enable-helm`.
 
 ## Installation

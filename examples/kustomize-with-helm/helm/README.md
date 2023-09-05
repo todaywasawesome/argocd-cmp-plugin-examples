@@ -1,3 +1,5 @@
+# Create Config Management Plugins with community Argo CD Helm chart
+
 This example shows installation of the Kustomize with Helm plugin using the Argo CD Helm Chart.
 
 Argo CD Helm supports creating config management plugins directly via the values file. This requires updating two sections.

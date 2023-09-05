@@ -1,3 +1,5 @@
+# Create Config Management Plugins with Codefresh Helm chart that includes Argo CD
+
 Codefresh packages Argo CD as part of their [Hybrid runtime](https://codefresh.io/docs/docs/installation/gitops/hybrid-gitops-helm-installation/). This Helm chart can take generic Argo CD paramaters, because Argo CD is a sub-chart the values files just need to be modified to be under `argo-cd`. See [example values file](values.yaml).
 
 Argo CD Helm supports creating config management plugins directly via the values file. This requires updating two sections.
