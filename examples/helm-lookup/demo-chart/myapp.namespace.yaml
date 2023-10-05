@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: myapp
+  annotations:
+    example.com/created-by: "Alice"
+    example.com/environment: "production"

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busybox-pod
+  namespace: {{.Release.Namespace}}
+spec:
+  containers:
+  - name: busybox-container
+    image: busybox
+    command: ["sleep", "3600"]
+    env:
+    {{- range $index, $annotation := (lookup "v1" "Namespace" "" .Release.Namespace).metadata.annotations}}
+      - name: {{ $index }}
+        value: {{ $annotation }}
+    {{- end}}
