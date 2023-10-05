@@ -51,7 +51,7 @@ spec:
         imagePullPolicy: IfNotPresent
         name: helm-lookup
         securityContext:
-          runAsNonRoot: true
+          runAsNonRoot: true 
           runAsUser: 999
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
@@ -66,9 +66,14 @@ spec:
         - mountPath: /tmp
           name: cmp-tmp
         - mountPath: /.kube
-          subPath: config
-          name: cluster-creds
-          readOnly: true
+          name: kube
+        - name: etc-hack
+          mountPath: /etc/passwd
+          subPath: passwd
+        # - mountPath: /.kubeinit/config
+        #   subPath: config
+        #   name: cluster-creds
+        #   readOnly: true
       - args:
         - /usr/local/bin/argocd-repo-server
         env:
@@ -268,6 +273,39 @@ spec:
           name: plugins
       dnsPolicy: ClusterFirst
       initContainers:
+      - name: set-permissions # Did you know, you can't set the user owner of a secret? This is a problem because kubeconfig files have to be owned by one person and not a group or it will throw warnings about insecure mode... https://github.com/kubernetes/kubernetes/issues/81089
+        image: busybox
+        command:
+        - 'sh'
+        - '-c'
+        - |
+          echo "Create User 999"
+
+          cp /etc/passwd /opt/my-etc/passwd
+
+          if [ -w /opt/my-etc/passwd ] ; then
+              echo "cmp:x:999:999:cmp:/home:/bin/false" >> /opt/my-etc/passwd
+          else
+              echo "Container ENTRYPOINT failed to add passwd entry for 999 UID"
+          fi
+
+          echo "Copy kubeconfig"
+          ls -li /.kubeinit
+          install -m 777 /.kubeinit/* /.kube
+          echo "Secret Copied"
+          echo "Permissions Left Open"
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 999
+        volumeMounts:
+          - name: kube
+            mountPath: /.kube
+          - mountPath: /.kubeinit/config
+            subPath: config
+            name: cluster-creds
+            # readOnly: true
+          - name: etc-hack
+            mountPath: /opt/my-etc
       - command:
         - /bin/cp
         - -n
@@ -333,3 +371,8 @@ spec:
       - name: cluster-creds
         secret:
           secretName: cluster-creds
+          # defaultMode: 256
+      - name: kube
+        emptyDir: {}
+      - name: etc-hack
+        emptyDir: {}

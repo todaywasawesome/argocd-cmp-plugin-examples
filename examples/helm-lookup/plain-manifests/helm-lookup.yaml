@@ -11,7 +11,7 @@ data:
     spec:
       init:
         command: [sh]
-        args: [-c, 'helm dependency build']
+        args: [-c, 'helm dependency build && whoami && chmod -R 400 /.kube/config']
       generate:
         command: [ "sh", "-c" ]
         args: [ "helm template $ARGOCD_APP_NAME . -n $ARGOCD_APP_NAMESPACE --dry-run=server --validate --kubeconfig /.kube/config --kube-context kind-argohelm" ]
