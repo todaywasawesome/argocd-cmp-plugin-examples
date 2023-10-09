@@ -45,10 +45,10 @@ spec:
 ```
 ## Secret usage
 
-Here is how to create a Kbernetes secret and get its value from AWS Secret Manager.
+Here is how to create a Kubernetes secret and get its value from AWS Secret Manager.
 
 * jenkins/secrets: is the name of the secret in AWS Secret Manager
-* pwd: is the name of the key
+* pwd: is the name of the key in that secret
 
 ```
 kind: Secret
